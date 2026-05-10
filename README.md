@@ -1,37 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PricePulse
 
-## Getting Started
+Track competitors automatically and get Telegram alerts when important changes happen.
 
-First, run the development server:
+## Product direction
+PricePulse is built for shop owners and business users who need simple competitor monitoring and action suggestions.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Core workflow: track competitors -> detect important change -> send Telegram alert -> take action
+- Internal engine: API Foundry still powers feeds, schemas, and advanced APIs for developer use
+
+## Core capabilities
+- Next.js App Router + TypeScript + Tailwind
+- Competitor tracking (including live Zepto/Blinkit paths)
+- Change detection
+- OpenAI-powered recommended actions with deterministic fallback
+- Anakin integration with fallback mode
+- Telegram alerts and alert history
+
+## Setup
+1. `npm install`
+2. Create `.env.local` and set:
+
+```env
+ANAKIN_API_KEY=...
+OPENAI_API_KEY=...
+# or OPEN_AI=...
+TELEGRAM_BOT_TOKEN=regenerated_token_here
+TELEGRAM_CHAT_ID=8779239912
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. `npm run dev`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Main pages
+- Dashboard: `/`
+- Competitors: `/projects/new`
+- Live Tracking: `/live-tracking`
+- Telegram Alerts: `/telegram`
+- Compare: `/compare`
+- Advanced APIs: `/api-docs`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Telegram quick test
+```bash
+curl http://localhost:3000/api/telegram/health
+curl -X POST http://localhost:3000/api/telegram/test
+curl -X POST http://localhost:3000/api/v1/projects/zepto/refresh-and-alert
+curl http://localhost:3000/api/v1/projects/zepto/alerts
+```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# api-foundry
+## Smoke tests
+- Core smoke: `npm run smoke`
+- Live smoke: `npm run smoke:live`
+- Project create smoke: `npm run smoke:create`
+- Telegram smoke: `npm run smoke:telegram`
